@@ -2929,6 +2929,7 @@ static int __qseecom_load_fw(struct qseecom_dev_handle *data, char *appname)
 	if (ret)
 		return ret;
 
+
 	ret = __qseecom_get_fw_data(appname, img_data, fw_size, &load_req);
 	if (ret) {
 		ret = -EIO;
@@ -3025,6 +3026,7 @@ static int qseecom_load_commonlib_image(struct qseecom_dev_handle *data)
 						&img_data, fw_size, &pa);
 	if (ret)
 		return -EIO;
+
 
 	ret = __qseecom_get_fw_data("cmnlib", img_data, fw_size, &load_req);
 	if (ret) {
