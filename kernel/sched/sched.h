@@ -1387,6 +1387,9 @@ static inline void inc_nr_running(struct rq *rq)
 	nr_stats->nr_last_stamp = rq->clock_task;
 #endif
 	rq->nr_running++;
+	#ifdef CONFIG_INTELLI_PLUG
+	write_seqcount_end(&nr_stats->ave_seqcnt);
+#endif
 
 if (rq->nr_running >= 2) {
 #ifdef CONFIG_SMP
@@ -1425,6 +1428,7 @@ static inline void dec_nr_running(struct rq *rq)
 #ifdef CONFIG_INTELLI_PLUG
 	write_seqcount_end(&nr_stats->ave_seqcnt);
 #endif
+
 }
 
 static inline void rq_last_tick_reset(struct rq *rq)
