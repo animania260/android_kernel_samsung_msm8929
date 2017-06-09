@@ -22,6 +22,7 @@
 #include <linux/lcd_notify.h>
 #include <linux/cpufreq.h>
 
+#if defined(CONFIG_MACH_J7_USA_SPR)
 static int suspend_cpu_num = 2, resume_cpu_num = 7;
 static int endurance_level = 0;
 static int device_cpus = 8;
@@ -45,7 +46,7 @@ struct notifier_block lcd_worker;
 static int sampling_time = DEF_SAMPLING_MS;
 static int load_threshold = CPU_LOAD_THRESHOLD;
 
-static int tplug_hp_enabled = 1;
+static int tplug_hp_enabled = 0;
 
 static int touch_boost_enabled = 0;
 
@@ -58,6 +59,7 @@ static struct delayed_work tplug_boost;
 static struct workqueue_struct *tplug_resume_wq;
 static struct delayed_work tplug_resume_work;
 
+#if defined(CONFIG_MACH_J7_USA_SPR)
 static unsigned int last_load[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 struct cpu_load_data {
@@ -77,6 +79,7 @@ static inline void offline_cpus(void)
 	unsigned int cpu;
 	switch(endurance_level) {
 		case 1:
+#if defined(CONFIG_MACH_J7_USA_SPR)
 			if(suspend_cpu_num > 4)
 				suspend_cpu_num = 4;
 		break;
@@ -99,6 +102,7 @@ static inline void cpus_online_all(void)
 	unsigned int cpu;
 	switch(endurance_level) {
 	case 1:
+#if defined(CONFIG_MACH_J7_USA_SPR)
 		if(resume_cpu_num > 3 || resume_cpu_num == 1)
 			resume_cpu_num = 3;
 	break;
@@ -107,6 +111,7 @@ static inline void cpus_online_all(void)
 			resume_cpu_num = 1;
 	break;
 	case 0:
+#if defined(CONFIG_MACH_J7_USA_SPR)
 		if(resume_cpu_num < 7)
 			resume_cpu_num = 7;
 	break;
@@ -267,7 +272,9 @@ static ssize_t __ref thunderplug_hp_enabled_store(struct kobject *kobj, struct k
 	switch(val)
 	{
 		case 0:
+			bcl_hotplug_switch = 1;
 		case 1:
+			bcl_hotplug_switch = 0;
 			tplug_hp_enabled = val;
 		break;
 		default:
@@ -375,15 +382,18 @@ static void __cpuinit tplug_work_fn(struct work_struct *work)
 	switch(endurance_level)
 	{
 	case 0:
+#if defined(CONFIG_MACH_J7_USA_SPR)
 		core_limit = 8;
 	break;
 	case 1:
+#if defined(CONFIG_MACH_J7_USA_SPR)
 		core_limit = 4;
 	break;
 	case 2:
 		core_limit = 2;
 	break;
 	default:
+#if defined(CONFIG_MACH_J7_USA_SPR)
 		core_limit = 8;
 	break;
 	}
@@ -568,6 +578,22 @@ static int __init thunderplug_init(void)
 
         return ret;
 }
+
+static void __exit thunderplug_exit(void)
+{
+	cancel_delayed_work(&tplug_work);
+	cancel_delayed_work(&tplug_resume_work);
+	cancel_delayed_work(&tplug_boost);
+	flush_workqueue(tplug_wq);
+	lcd_unregister_client(&lcd_worker);
+	pr_info("%s : unregistering input boost", THUNDERPLUG);
+	input_unregister_handler(&tplug_input_handler);
+	kobject_put(thunderplug_kobj);
+	sysfs_remove_group(thunderplug_kobj, &thunderplug_attr_group);
+}
+
+late_initcall(thunderplug_init);
+module_exit(thunderplug_exit);
 
 MODULE_LICENSE("GPL and additional rights");
 MODULE_AUTHOR("Varun Chitre <varun.chitre15@gmail.com>");
