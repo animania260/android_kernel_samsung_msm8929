@@ -1408,8 +1408,6 @@ source "arch/arm/hotplug/alucard/Kconfig"
 
 source "arch/arm/hotplug/bricked/Kconfig"
 
-source "arch/arm/hotplug/intelliplug/Kconfig"
-
 source "arch/arm/hotplug/msmhotplug/Kconfig"
 
 menu "Bus support"
