@@ -3,13 +3,10 @@ export PATH=~/android/j700p/J700PVPS1AQD1/kernelbuild/arm-eabi-4.8/bin:$PATH
 export ARCH=arm
 export CROSS_COMPILE=~/android/j700p/J700PVPS1AQD1/kernelbuild/arm-eabi-4.8/bin/arm-eabi-
 
-BUILD_KERNEL_DIR=$(pwd)
-BUILD_KERNEL_OUT=$(pwd)/out
-
-#use ccache
-#export USE_CCACHE=1
-#export CCACHE_DIR=~/.ccache
-#/usr/bin/ccache -M 50G
+#UberTC 6.0
+#export PATH=~/android/toolchains/arm-eabi-6.0/bin:$PATH
+#export ARCH=arm
+#export CROSS_COMPILE=~/android/toolchains/arm-eabi-6.0/bin/arm-eabi-
 
 #UberTC 5.3
 #export PATH=~/android/toolchains/arm-eabi-5.3/bin:$PATH
@@ -20,6 +17,14 @@ BUILD_KERNEL_OUT=$(pwd)/out
 #export PATH=~/android/toolchains/arm-eabi-4.9/bin:$PATH
 #export ARCH=arm
 #export CROSS_COMPILE=~/android/toolchains/arm-eabi-4.9/bin/arm-eabi-
+
+BUILD_KERNEL_DIR=$(pwd)
+BUILD_KERNEL_OUT=$(pwd)/out
+
+#use ccache
+#export USE_CCACHE=1
+#export CCACHE_DIR=~/.ccache
+#/usr/bin/ccache -M 50G
 
 #KERNEL_ZIMG=$BUILD_KERNEL_OUT_DIR/arch/arm/boot/zImage
 #DTC=$BUILD_KERNEL_DIR/out/scripts/dtc/dtc
@@ -52,6 +57,7 @@ make -C $(pwd) O=$(pwd)/out -j2 modules_install INSTALL_MOD_PATH=sohren_install 
 
 # MAIN FUNCTION
 cp ./build.log ./build.log-bak
+rm ./build.log
 (
 	START_TIME=`date +%s`
 
