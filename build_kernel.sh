@@ -38,8 +38,15 @@ FUNC_BUILD_KERNEL()
 #make -C $(pwd) O=$(pwd)/out clean
 #make -C $(pwd) O=$(pwd)/out mrproper
 #make -C $(pwd) O=$(pwd)/out distclean
+rm -rf out/sohren_install
+mkdir -p out/sohren_install
+#rm -f out/arch/arm/boot/dts/*.dtb
+#rm -f out/arch/arm/boot/dt.img
+rm -f twrp-installer/tools/zImage
+rm -f twrp-installer/tools/dt.image
+rm -f twrp-installer/system/lib/modules/pronto/pronto_wlan.ko
 
-#Compile the kernel and dtimage
+#Compile the kernel
 echo "Build kernel"
 mkdir $(pwd)/out
 make -C $(pwd) O=$(pwd)/out j7ltespr_defconfig
@@ -49,10 +56,27 @@ cp $(pwd)/out/arch/arm/boot/zImage $(pwd)/arch/arm/boot/zImage
 echo "Create dt.img"
 tools/dtbTool -o out/arch/arm/boot/dt.img -s 2048 -p out/scripts/dtc/ out/arch/arm/boot/dts/
 
-echo "kernel and dtimage compilation completed successfully"
-echo "......."
-echo "make modules_install"
+echo "Kernel and dtimage compilation completed successfully"
+echo "........................................................."
+echo "..........................................."
+echo "............................"
+echo ".............."
+echo "Compile Modules: modules_install"
+
 make -C $(pwd) O=$(pwd)/out -j2 modules_install INSTALL_MOD_PATH=sohren_install INSTALL_MOD_STRIP=1
+
+# copy zImage, modules, etc to twrp zip path
+
+echo "Copy Modules and create TWRP Zip"
+find out/sohren_install/ -name 'wlan.ko' -type f -exec cp '{}' twrp-installer/system/lib/modules/ \;
+mv twrp-installer/system/lib/modules/wlan.ko twrp-installer/system/lib/modules/pronto/pronto_wlan.ko
+cp out/arch/arm/boot/zImage twrp-installer/tools/
+cp out/arch/arm/boot/dt.img twrp-installer/tools/
+cd twrp-installer
+zip -r ../../releases/akern.zip ./
+today=$(date +"-%d%m%Y")
+mv ~/android/j700p/anikernel/releases/akern.zip ~/android/j700p/anikernel/releases/akern-$ver$today.zip
+echo "COMPLETE....."
 )
 
 # MAIN FUNCTION
