@@ -1404,12 +1404,6 @@ endmenu
 source "arch/arm/common/Kconfig"
 source "arch/arm/hotplug/Kconfig"
 
-source "arch/arm/hotplug/alucard/Kconfig"
-
-source "arch/arm/hotplug/bricked/Kconfig"
-
-source "arch/arm/hotplug/msmhotplug/Kconfig"
-
 menu "Bus support"
 
 config ARM_AMBA
