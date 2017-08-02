@@ -196,9 +196,9 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/x86/ -e s/x86_64/x86/ \
 #CROSS_COMPILE	?= $(CONFIG_CROSS_COMPILE:"%"=%)
 ARCH		?= arm
 #CROSS_COMPILE   ?= ~/android/j700p/J700PVPS1AQD1/kernelbuild/arm-eabi-4.8/bin/arm-eabi-
-#CROSS_COMPILE   ?= ~/android/toolchains/arm-eabi-4.9/bin/arm-eabi-
+CROSS_COMPILE   ?= ~/android/toolchains/arm-eabi-4.9/bin/arm-eabi-
 #CROSS_COMPILE   ?= ~/android/toolchains/arm-eabi-5.3/bin/arm-eabi-
-CROSS_COMPILE   ?= ~/android/toolchains/arm-eabi-6.0/bin/arm-eabi-
+#CROSS_COMPILE   ?= ~/android/toolchains/arm-eabi-6.0/bin/arm-eabi-
 
 
 # Architecture as present in compile.h

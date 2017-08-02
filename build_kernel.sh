@@ -1,22 +1,22 @@
 #Samsung Included 4.8 toolchain
 #export PATH=~/android/j700p/J700PVPS1AQD1/kernelbuild/arm-eabi-4.8/bin:$PATH
 #export ARCH=arm
-#export CONFIG_CROSS_COMPILE=~/android/j700p/J700PVPS1AQD1/kernelbuild/arm-eabi-4.8/bin/arm-eabi-
+#export CROSS_COMPILE=~/android/j700p/J700PVPS1AQD1/kernelbuild/arm-eabi-4.8/bin/arm-eabi-
 
 #UberTC 6.0
-export PATH=~/android/toolchains/arm-eabi-6.0/bin:$PATH
-export ARCH=arm
-export CONFIG_CROSS_COMPILE=~/android/toolchains/arm-eabi-6.0/bin/arm-eabi-
+#export PATH=~/android/toolchains/arm-eabi-6.0/bin:$PATH
+#export ARCH=arm
+#export CROSS_COMPILE=~/android/toolchains/arm-eabi-6.0/bin/arm-eabi-
 
 #UberTC 5.3
 #export PATH=~/android/toolchains/arm-eabi-5.3/bin:$PATH
 #export ARCH=arm
-#export CONFIG_CROSS_COMPILE=~/android/toolchains/arm-eabi-5.3/bin/arm-eabi-
+#export CROSS_COMPILE=~/android/toolchains/arm-eabi-5.3/bin/arm-eabi-
 
 #UberTC 4.9
-#export PATH=~/android/toolchains/arm-eabi-4.9/bin:$PATH
-#export ARCH=arm
-#export CONFIG_CROSS_COMPILE=~/android/toolchains/arm-eabi-4.9/bin/arm-eabi-
+export PATH=~/android/toolchains/arm-eabi-4.9/bin:$PATH
+export ARCH=arm
+export CROSS_COMPILE=~/android/toolchains/arm-eabi-4.9/bin/arm-eabi-
 
 BUILD_KERNEL_DIR=$(pwd)
 BUILD_KERNEL_OUT=$(pwd)/out
