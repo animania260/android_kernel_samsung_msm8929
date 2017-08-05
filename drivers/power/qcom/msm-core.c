@@ -405,15 +405,10 @@ static long msm_core_ioctl(struct file *file, unsigned int cmd,
 	int i, cpu = num_possible_cpus();
 	int mpidr;
 	int cluster, cpumask;
-
+	
 	if (!argp)
 		return -EINVAL;
 	
-	get_user(cluster, &argp->cluster);
-	mpidr = (cluster << (MAX_CORES_PER_CLUSTER *
-			MAX_NUM_OF_CLUSTERS));
-	get_user(cpumask, &argp->cpumask);
-
 	get_user(cluster, &argp->cluster);
 	mpidr = (cluster << (MAX_CORES_PER_CLUSTER *
 			MAX_NUM_OF_CLUSTERS));
